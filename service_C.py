@@ -9,8 +9,6 @@ app = FastAPI()
 
 
 sql_query = """
-DROP TABLE IF EXISTS weather_records;
-
 CREATE TABLE weather_records (
     id INT AUTO_INCREMENT PRIMARY KEY,
     timestamp DATETIME,
@@ -30,8 +28,9 @@ CREATE TABLE weather_records (
 @app.post("/")
 def root(data_from_service_b: list[dict]):
     with mysql.connector.connect(
-    host="localhost", user="root", password="", database="classicmodels") as mydb:
+    host="localhost", user="root", password="123456", database="classicmodels") as mydb:
         with mydb.cursor() as mycursor:
+            mycursor.execute("DROP TABLE IF EXISTS weather_records")
             mycursor.execute(sql_query)
 
             for item in data_from_service_b:
