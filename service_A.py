@@ -9,7 +9,7 @@ app = FastAPI()
 @app.post("/ingest")
 def ingest(location_name):
     data = ingest_weather_for_location(location_name)
-    response = requests.post("http://127.0.0.1:8001",json=json.dumps(data, indent=4, sort_keys=True, default=str))
+    response = requests.post("http://127.0.0.1:8001/clean",json=json.dumps(data, indent=4, sort_keys=True, default=str))
     return response.json()
 
 
