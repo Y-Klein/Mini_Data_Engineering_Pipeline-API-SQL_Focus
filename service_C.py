@@ -6,8 +6,6 @@ import mysql.connector
 app = FastAPI()
 
 
-
-
 sql_query = """
 DROP TABLE IF EXISTS weather_records;
 
