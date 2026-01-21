@@ -9,9 +9,9 @@ app = FastAPI()
 @app.post("/ingest")
 def ingest(location_name):
     data = ingest_weather_for_location(location_name)
-    response = requests.post("http://127.0.0.1:8001/clean",json=json.dumps(data, indent=4, sort_keys=True, default=str))
+    response = requests.post("http://127.0.0.1:8001/clean",
+                            json=data)
     return response.json()
-
 
 # --------- Helper: Geocoding ----------
 def fetch_coordinates(location_name: str):
@@ -75,7 +75,7 @@ def ingest_weather_for_location(location_name):
     # 3. Flatten to records (ONE record per hour per location)
     for i in range(len(times)):
         record = {
-            "timestamp": datetime.fromisoformat(times[i]),
+            "timestamp": times[i],
             "location_name": location["location_name"],
             "country": location["country"],
             "latitude": location["latitude"],
