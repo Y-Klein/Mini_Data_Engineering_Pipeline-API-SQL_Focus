@@ -1,6 +1,4 @@
-import json
 import requests
-from datetime import datetime
 import uvicorn
 from fastapi import FastAPI
 
