@@ -31,7 +31,7 @@ def fetch_coordinates(location_name: str):
     result = data["results"][0]
     return {
         "location_name": result["name"],
-        "country": result["country"],
+        "country": result.get("country"),
         "latitude": result["latitude"],
         "longitude": result["longitude"]
     }
