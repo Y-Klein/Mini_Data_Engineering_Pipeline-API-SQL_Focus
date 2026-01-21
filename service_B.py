@@ -1,14 +1,14 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-from api_extactor import ingest_weather_for_location
-import http
+import uvicorn 
+
 
 app = FastAPI()
 
 
 @app.post("/clean")
-def clean_db():
-    df_weather = pd.DataFrame(ingest_weather_for_location("London"))
+def clean_db(data_from_service_A):
+    df_weather = pd.DataFrame(data_from_service_A)
     
     # create new column temperature_category
     df_weather["temperature_category"] = df_weather["temperature"].apply(
@@ -21,8 +21,8 @@ def clean_db():
     )
     # convert the dataframe to json file
     df_weather.to_json('weather_data.json', orient='records', indent=4)
-    return df_weather.to_dict(orient='records')
+    return df_weather
 
-
-# print(clean_db().to_string())
+if __name__=="__main__":
+    uvicorn.run(app,port=8001)
 
